@@ -6,7 +6,6 @@
     android:paddingTop="15dp">
     <ImageView
         android:id="@+id/fotoImageViewLista"
-        android:background="@color/purple_200"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_gravity="center_horizontal"/>

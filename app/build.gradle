@@ -46,5 +46,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
 
     //glide https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
 }
