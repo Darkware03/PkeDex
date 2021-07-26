@@ -1,10 +1,13 @@
 package com.example.pokedex;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.pokedex.adaptadores.ListaPokemonAdapter;
 import com.example.pokedex.modelos.Pokemon;
 import com.example.pokedex.modelos.PokemonRespuesta;
 import com.example.pokedex.pokeapi.PokeapiService;
@@ -20,11 +23,20 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private static final String TAG = "POKEDEX";
+
+    private RecyclerView recyclerView;
+    private ListaPokemonAdapter listaPokemonAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recyclearview_listpokemon);
+        listaPokemonAdapter = new ListaPokemonAdapter();
+        recyclerView.setAdapter(listaPokemonAdapter);
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(this,3);
+        recyclerView.setLayoutManager(layoutManager);
         retrofit = new Retrofit.Builder()
                 .baseUrl("https://pokeapi.co/api/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -45,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()){
                     PokemonRespuesta pokemonRespuesta = response.body();
                     ArrayList<Pokemon> listaPokemon = pokemonRespuesta.getResults();
-                    for (int i = 0; i < listaPokemon.size(); i++){
+  /*                  for (int i = 0; i < listaPokemon.size(); i++){
                         Pokemon p = listaPokemon.get(i);
                         Log.i(TAG, "pokemon:" + p.getName());
-                    }
+                    }*/
+
+                    listaPokemonAdapter.agregarListaPokemon(listaPokemon);
                 }else {
                     Log.e(TAG, "onResponse:" + response.errorBody());
                 }
